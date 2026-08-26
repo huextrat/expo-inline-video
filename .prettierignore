@@ -1,0 +1,6 @@
+build
+node_modules
+example/ios
+example/android
+CHANGELOG.md
+yarn.lock

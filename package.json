@@ -1,0 +1,107 @@
+{
+  "name": "expo-inline-video",
+  "version": "0.1.0",
+  "description": "A tiny AVPlayerLayer-backed video surface for muted, looping, inline clips in lists — no AVPlayerViewController, no audio session",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "build",
+    "src",
+    "ios",
+    "expo-module.config.json",
+    "!**/__tests__",
+    "!**/__mocks__",
+    "!ios/build"
+  ],
+  "scripts": {
+    "build": "node internal/module_scripts/build.js",
+    "clean": "node internal/module_scripts/clean.js",
+    "example": "yarn workspace expo-inline-video-example",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint .",
+    "open:ios": "node internal/module_scripts/open-ios.js",
+    "prepare": "node internal/module_scripts/prepare.js",
+    "release": "semantic-release",
+    "test": "node internal/module_scripts/test.js",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "expo-module",
+    "video",
+    "inline-video",
+    "avplayerlayer",
+    "looping",
+    "list",
+    "performance",
+    "ios"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huextrat/expo-inline-video.git"
+  },
+  "bugs": {
+    "url": "https://github.com/huextrat/expo-inline-video/issues"
+  },
+  "author": "Hugo Extrat <extrat.h@gmail.com> (https://github.com/huextrat)",
+  "license": "MIT",
+  "homepage": "https://github.com/huextrat/expo-inline-video#readme",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "packageManager": "yarn@4.18.0",
+  "workspaces": [
+    "example"
+  ],
+  "peerDependencies": {
+    "expo": "*",
+    "react": "*",
+    "react-native": "*"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.28.4",
+    "@commitlint/cli": "^20.5.3",
+    "@commitlint/config-conventional": "^20.5.3",
+    "@react-native/jest-preset": "0.86.2",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@testing-library/react-native": "^13.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "~19.2.2",
+    "@types/react-refresh": "^0",
+    "@types/react-test-renderer": "^19",
+    "babel-preset-expo": "~57.0.0",
+    "eslint": "~9.39.4",
+    "eslint-config-universe": "^15.0.3",
+    "expo": "^57.0.15",
+    "jest": "^29.7.0",
+    "jest-expo": "~57.0.4",
+    "prettier": "^3.9.6",
+    "react": "19.2.3",
+    "react-native": "0.86.2",
+    "react-refresh": "^0.17.0",
+    "react-test-renderer": "19.2.3",
+    "semantic-release": "^25.0.9",
+    "typescript": "~5.9.2"
+  },
+  "jest": {
+    "preset": "jest-expo/ios",
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/index.ts",
+      "!src/InlineVideo.types.ts"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+# Publishing is manual on purpose for now: run this workflow from the Actions
+# tab once NPM_TOKEN and GH_TOKEN are set on the repository. To go fully
+# automatic afterwards, add back:
+#
+#   push:
+#     branches: [main]
+name: Release
+
+on:
+  workflow_dispatch:
+
+concurrency:
+  group: release
+  cancel-in-progress: true
+
+jobs:
+  release:
+    name: Release 🚀
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          fetch-depth: 0
+
+      - uses: ./.github/actions/setup
+
+      - name: Build the package
+        run: yarn prepare
+
+      - name: Release
+        run: yarn release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

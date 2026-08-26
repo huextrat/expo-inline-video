@@ -1,0 +1,32 @@
+name: Setup
+description: Set up Node.js and install dependencies with Yarn
+
+runs:
+  using: composite
+  steps:
+    # The runners ship Yarn 1, which refuses to run a repo pinned to Yarn 4
+    # through `packageManager`. Corepack hands over to the pinned version.
+    - name: Enable Corepack
+      run: corepack enable
+      shell: bash
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v6
+      with:
+        node-version-file: .nvmrc
+
+    - name: Cache dependencies
+      id: yarn-cache
+      uses: actions/cache@v5
+      with:
+        path: |
+          **/node_modules
+          .yarn/install-state.gz
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}-${{ hashFiles('**/package.json', '!node_modules/**') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+
+    - name: Install dependencies
+      if: steps.yarn-cache.outputs.cache-hit != 'true'
+      run: yarn install --immutable
+      shell: bash
