@@ -1,0 +1,10 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "paths": {
+      "expo-inline-video": ["../src/index"],
+      "expo-inline-video/*": ["../src/*"]
+    }
+  }
+}

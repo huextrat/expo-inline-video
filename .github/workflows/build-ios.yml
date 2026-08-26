@@ -1,0 +1,68 @@
+# The only job that compiles the Swift. Everything else in CI runs on Linux and
+# would happily merge a module that does not build.
+name: Build iOS
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    paths:
+      - 'ios/**'
+      - 'example/**'
+      - 'expo-module.config.json'
+      - 'package.json'
+      - 'yarn.lock'
+      - '.github/workflows/build-ios.yml'
+  merge_group:
+    types:
+      - checks_requested
+
+concurrency:
+  group: build-ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Example app (simulator) 🍎
+    runs-on: macos-15
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: ./.github/actions/setup
+
+      - name: Prebuild the example app
+        run: yarn example expo prebuild --platform ios --no-install --clean
+
+      - name: Cache CocoaPods
+        uses: actions/cache@v5
+        with:
+          path: example/ios/Pods
+          key: ${{ runner.os }}-pods-${{ hashFiles('example/ios/Podfile.lock', 'yarn.lock') }}
+          restore-keys: ${{ runner.os }}-pods-
+
+      # `cd` rather than `--project-directory`: expo-modules-autolinking resolves
+      # the dependency graph from the CocoaPods process' working directory, so
+      # running from the repo root silently links zero local modules.
+      - name: Install pods
+        run: pod install
+        working-directory: example/ios
+
+      - name: Assert the module is linked
+        run: |
+          set -euo pipefail
+          grep -q 'ExpoInlineVideo' example/ios/Podfile.lock
+          grep -q 'InlineVideoModule' "example/ios/Pods/Target Support Files/Pods-expoinlinevideoexample/ExpoModulesProvider.swift"
+
+      - name: Build
+        run: |
+          set -o pipefail
+          xcodebuild \
+            -workspace example/ios/expoinlinevideoexample.xcworkspace \
+            -scheme expoinlinevideoexample \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination 'generic/platform=iOS Simulator' \
+            -quiet \
+            build

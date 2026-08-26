@@ -1,0 +1,20 @@
+# Releases are cut by semantic-release from the commit history, so the history
+# has to stay conventional. Enforced in CI rather than through a local git hook:
+# no `prepare`/husky dance, and it also covers commits pushed from the web UI.
+name: Commitlint
+
+on:
+  pull_request:
+  merge_group:
+    types:
+      - checks_requested
+
+jobs:
+  commitlint:
+    name: Conventional commits 📝
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+      - uses: wagoid/commitlint-github-action@v6
