@@ -4,6 +4,12 @@ description: Set up Node.js and install dependencies with Yarn
 runs:
   using: composite
   steps:
+    # The runners ship Yarn 1, which refuses to run a repo pinned to Yarn 4
+    # through `packageManager`. Corepack hands over to the pinned version.
+    - name: Enable Corepack
+      run: corepack enable
+      shell: bash
+
     - name: Set up Node.js
       uses: actions/setup-node@v6
       with:
