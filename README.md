@@ -2,7 +2,6 @@
 
 [![npm version](https://img.shields.io/npm/v/expo-inline-video.svg)](https://www.npmjs.com/package/expo-inline-video)
 [![CI](https://github.com/huextrat/expo-inline-video/actions/workflows/ci.yml/badge.svg)](https://github.com/huextrat/expo-inline-video/actions/workflows/ci.yml)
-[![Build iOS](https://github.com/huextrat/expo-inline-video/actions/workflows/build-ios.yml/badge.svg)](https://github.com/huextrat/expo-inline-video/actions/workflows/build-ios.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 A tiny video surface for the one case general-purpose players are bad at: **muted, looping, decorative clips inside a scrolling list**.

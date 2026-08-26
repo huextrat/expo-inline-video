@@ -45,7 +45,21 @@ The Swift lives in `ios/`. Anything touching it must keep the two invariants the
 1. **No `AVPlayerViewController`.** The moment one is created the whole point is gone.
 2. **`AVAudioSession` is never touched.** No `setCategory`, no `setActive`. The player is muted for its entire life so the system never activates the shared session on its behalf, and the module never fights another player stack over it.
 
-CI compiles the example app on macOS (`.github/workflows/build-ios.yml`) — that is the only job that type-checks the Swift, so watch it on your PR.
+Nothing in CI compiles the Swift — macOS runners are expensive, so that check is local. Build the example app before pushing anything native:
+
+```sh
+yarn example expo prebuild --platform ios --clean
+cd example/ios && pod install
+xcodebuild -workspace expoinlinevideoexample.xcworkspace -scheme expoinlinevideoexample \
+  -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -quiet build
+```
+
+Two things worth asserting after `pod install`, because autolinking fails silently:
+
+```sh
+grep ExpoInlineVideo Podfile.lock
+grep InlineVideoModule "Pods/Target Support Files/Pods-expoinlinevideoexample/ExpoModulesProvider.swift"
+```
 
 ## Commits
 
