@@ -18,7 +18,7 @@ jobs:
     name: Lint 🧹
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: yarn lint
       - run: yarn format:check
@@ -27,7 +27,7 @@ jobs:
     name: Typecheck 🔎
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: yarn typecheck
 
@@ -35,7 +35,7 @@ jobs:
     name: Test 🧪
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: yarn test --maxWorkers=2 --coverage
 
@@ -43,7 +43,7 @@ jobs:
     name: Build package 📦
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: ./.github/actions/setup
       - run: yarn prepare
       - name: Check the published file list
