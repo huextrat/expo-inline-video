@@ -5,11 +5,11 @@
   "dependencies": {
     "expo": "~57.0.16",
     "expo-inline-video": "workspace:*",
-    "react": "19.2.3",
-    "react-native": "0.86.2"
+    "react": "19.3.0",
+    "react-native": "0.87.1"
   },
   "devDependencies": {
-    "@types/react": "~19.2.2",
+    "@types/react": "~19.3.0",
     "typescript": "~5.9.2"
   },
   "scripts": {
